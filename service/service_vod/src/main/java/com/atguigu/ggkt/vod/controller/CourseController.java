@@ -4,6 +4,7 @@ package com.atguigu.ggkt.vod.controller;
 import com.atguigu.ggkt.model.vod.Course;
 import com.atguigu.ggkt.result.Result;
 import com.atguigu.ggkt.vo.vod.CourseFormVo;
+import com.atguigu.ggkt.vo.vod.CoursePublishVo;
 import com.atguigu.ggkt.vo.vod.CourseQueryVo;
 import com.atguigu.ggkt.vod.service.CourseService;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -61,6 +62,14 @@ public class CourseController {
     public Result update(@RequestBody CourseFormVo courseFormVo){
         courseService.updateCourseId(courseFormVo);
         return Result.ok(null);
+    }
+
+    //根据课程id查询发布课程信息
+    @ApiOperation("id查询发布课程信息")
+    @GetMapping("getCoursePublishVo/{id}")
+    public Result getCoursePublishVo(@PathVariable("id") Long id){
+        CoursePublishVo coursePublishVo = courseService.getCoursePublishVo(id);
+        return Result.ok(coursePublishVo);
     }
 }
 

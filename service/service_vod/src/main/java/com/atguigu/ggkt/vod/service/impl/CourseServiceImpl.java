@@ -6,6 +6,7 @@ import com.atguigu.ggkt.model.vod.CourseDescription;
 import com.atguigu.ggkt.model.vod.Subject;
 import com.atguigu.ggkt.model.vod.Teacher;
 import com.atguigu.ggkt.vo.vod.CourseFormVo;
+import com.atguigu.ggkt.vo.vod.CoursePublishVo;
 import com.atguigu.ggkt.vo.vod.CourseQueryVo;
 import com.atguigu.ggkt.vod.mapper.CourseMapper;
 import com.atguigu.ggkt.vod.service.CourseDescriptionService;
@@ -143,6 +144,12 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
         CourseDescription description = new CourseDescription();
         description.setDescription(courseFormVo.getDescription());
         descriptionService.updateById(description);
+    }
+
+    //根据课程id查询发布课程信息
+    @Override
+    public CoursePublishVo getCoursePublishVo(Long id) {
+        return baseMapper.selectCoursePublishVoById(id);
     }
 
     //获取这些id对应名称，进行封装，最终显示
