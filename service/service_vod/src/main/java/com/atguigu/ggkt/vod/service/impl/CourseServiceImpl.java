@@ -9,10 +9,7 @@ import com.atguigu.ggkt.vo.vod.CourseFormVo;
 import com.atguigu.ggkt.vo.vod.CoursePublishVo;
 import com.atguigu.ggkt.vo.vod.CourseQueryVo;
 import com.atguigu.ggkt.vod.mapper.CourseMapper;
-import com.atguigu.ggkt.vod.service.CourseDescriptionService;
-import com.atguigu.ggkt.vod.service.CourseService;
-import com.atguigu.ggkt.vod.service.SubjectService;
-import com.atguigu.ggkt.vod.service.TeacherService;
+import com.atguigu.ggkt.vod.service.*;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -21,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,6 +42,12 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
 
     @Autowired
     private CourseDescriptionService descriptionService;
+
+    @Autowired
+    private VideoService videoService;
+
+    @Autowired
+    private ChapterService chapterService;
 
     //点播课程列表
     @Override
@@ -143,6 +147,8 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
         //修改课程描述信息
         CourseDescription description = new CourseDescription();
         description.setDescription(courseFormVo.getDescription());
+        //设置课程描述id
+        description.setId(course.getId());
         descriptionService.updateById(description);
     }
 
@@ -150,6 +156,31 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
     @Override
     public CoursePublishVo getCoursePublishVo(Long id) {
         return baseMapper.selectCoursePublishVoById(id);
+    }
+
+    //课程的最终发布
+    @Override
+    public void publishCourse(Long id) {
+        Course course = baseMapper.selectById(id);
+        course.setStatus(1);    //一经发布
+        course.setPublishTime(new Date());
+        baseMapper.updateById(course);
+    }
+
+    //删除课程
+    @Override
+    public void removeCourseId(Long id) {
+        //根据id删除小节
+        videoService.removeVideoByCourseId(id);
+
+        //根据id删除章节
+        chapterService.removeChapterByCourseId(id);
+
+        //根据id删除课程描述
+        descriptionService.removeById(id);
+
+        //根据id删除课程
+        baseMapper.deleteById(id);
     }
 
     //获取这些id对应名称，进行封装，最终显示

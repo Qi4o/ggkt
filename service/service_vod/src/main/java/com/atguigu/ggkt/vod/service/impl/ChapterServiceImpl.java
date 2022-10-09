@@ -26,7 +26,7 @@ import java.util.List;
  */
 @Service
 public class ChapterServiceImpl extends ServiceImpl<ChapterMapper, Chapter> implements ChapterService {
-
+    
     @Autowired
     private VideoService videoService;
 
@@ -63,5 +63,13 @@ public class ChapterServiceImpl extends ServiceImpl<ChapterMapper, Chapter> impl
         }
 
         return list;
+    }
+
+    //根据id删除章节
+    @Override
+    public void removeChapterByCourseId(Long id) {
+        QueryWrapper<Chapter> wrapper = new QueryWrapper<>();
+        wrapper.eq("course_id", id);
+        baseMapper.delete(wrapper);
     }
 }

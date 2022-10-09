@@ -7,7 +7,9 @@ import com.atguigu.ggkt.vo.vod.CourseFormVo;
 import com.atguigu.ggkt.vo.vod.CoursePublishVo;
 import com.atguigu.ggkt.vo.vod.CourseQueryVo;
 import com.atguigu.ggkt.vod.service.CourseService;
+import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -61,7 +63,8 @@ public class CourseController {
     @PostMapping("update")
     public Result update(@RequestBody CourseFormVo courseFormVo){
         courseService.updateCourseId(courseFormVo);
-        return Result.ok(null);
+        //课程id
+        return Result.ok(courseFormVo.getId());
     }
 
     //根据课程id查询发布课程信息
@@ -70,6 +73,22 @@ public class CourseController {
     public Result getCoursePublishVo(@PathVariable("id") Long id){
         CoursePublishVo coursePublishVo = courseService.getCoursePublishVo(id);
         return Result.ok(coursePublishVo);
+    }
+
+    //课程的最终发布
+    @ApiOperation("课程最终发布")
+    @PutMapping("publishCourse/{id}")
+    public Result publishCourse(@PathVariable Long id){
+        courseService.publishCourse(id);
+        return Result.ok(null);
+    }
+
+    //删除课程
+    @ApiOperation("删除课程")
+    @DeleteMapping("remove/{id}")
+    public Result remove(@PathVariable Long id){
+        courseService.removeCourseId(id);
+        return Result.ok(null);
     }
 }
 

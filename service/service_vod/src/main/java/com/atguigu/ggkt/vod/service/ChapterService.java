@@ -17,6 +17,10 @@ import java.util.List;
  */
 public interface ChapterService extends IService<Chapter> {
 
+
     //1 大纲列表（章节和小节列表）
     List<ChapterVo> getTreeList(Long courseId);
+
+    //根据id删除章节
+    void removeChapterByCourseId(Long id);
 }
