@@ -33,7 +33,7 @@ public class VodServiceIml implements VodService {
         request.setProcedure("LongVideoPreset");
         try {
             //调用方法上传视频
-            VodUploadResponse response = client.upload("ap-beijing", request);
+            VodUploadResponse response = client.upload("ap-guangzhou", request);
             String fileId = response.getFileId();
             return fileId;
         } catch (Exception e) {

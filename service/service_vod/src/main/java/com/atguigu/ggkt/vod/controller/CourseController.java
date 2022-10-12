@@ -26,7 +26,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/admin/vod/course")
-@CrossOrigin
+//@CrossOrigin
 public class CourseController {
 
     @Autowired

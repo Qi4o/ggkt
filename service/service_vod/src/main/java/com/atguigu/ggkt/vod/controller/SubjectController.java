@@ -23,7 +23,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/admin/vod/subject")
-@CrossOrigin
+//@CrossOrigin
 public class SubjectController {
 
     @Autowired

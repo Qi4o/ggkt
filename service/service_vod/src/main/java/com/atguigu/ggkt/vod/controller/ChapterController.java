@@ -21,7 +21,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/admin/vod/chapter")
-@CrossOrigin
+//@CrossOrigin
 public class ChapterController {
 
 
